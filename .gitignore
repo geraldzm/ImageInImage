@@ -2,6 +2,7 @@
 .idea/
 CMakeLists.txt
 cmake-build-debug/
+images/
 
 Makefile
 
@@ -37,6 +38,3 @@ Makefile
 *.exe
 *.out
 *.app
-
-# libs
-/opencv-master/

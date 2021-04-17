@@ -7,18 +7,18 @@
 
 namespace std {
     template<>
-    struct hash<Pixel*> {
-        size_t operator()(const Pixel* pixel) const {
-            return hash<uint32_t>()(pixel->getColor());
+    struct hash<Pixel> {
+        size_t operator()(const Pixel pixel) const {
+            return hash<uint32_t>()(pixel.getColor());
         }
     };
 }
 
 class Histogram {
 
-private:
-    std::unordered_map<Pixel*, int> pixelHash;
-    unsigned int norm;
+public:
+    std::unordered_map<Pixel, int> pixelHash;
+    double norm;
 
 public:
 
@@ -26,47 +26,35 @@ public:
         pixelHash = {};
     }
 
-    ~Histogram() {
-
-        for(auto & current : pixelHash)
-            delete current.first;
-
-     //   pixelHash.clear();
-    }
-
-
     void addPixel(uint8_t red, uint8_t green, uint8_t blue) {
 
-        auto* pixel = new Pixel(red, green, blue);
+        Pixel pixel(red, green, blue);
+        pixelHash[pixel]++;
 
-        auto ptr = pixelHash.find(pixel);
-
-        if(ptr != pixelHash.end()) {
-            ptr->second += 1;
-            delete pixel;
-        } else{
-            pixelHash[pixel] = 1;
-        }
     }
 
 
     double calculateCosineSimilarity(Histogram &histogram) {
 
-        printHistogram();
         // (A*B) / (||A|| * ||B||)
 
-        uint32_t quotient = 0;
+        unsigned int quotient = 0;
         int appearances;
+        int equal = 0;
 
         for(auto & current : pixelHash) {
             appearances = histogram.pixelHash[current.first];
 
-            if(appearances != 0)
+            if(appearances != 0) {
                 quotient += appearances * current.second;
+                equal ++;
+            }
         }
 
         double rs = quotient / ((double) (getNorm() * histogram.getNorm()));
-
+/*
+        std::cout << "Equals: " << equal << std::endl;
+        std::cout << "quotient: " << quotient << std::endl;
         std::cout << "Size Hash 1: " << pixelHash.size() << std::endl;
         std::cout << "Size Hash 2: " << histogram.pixelHash.size() << std::endl;
 
@@ -74,11 +62,16 @@ public:
         std::cout << "Norm Hash 2: " << histogram.getNorm() << std::endl;
 
         std::cout << "rs: " << rs << std::endl;
+*/
+        // round 4 digits precision to avoid decimal trash i.e 1.0000000000000002
+      //  vectorDistance = (double)Math.round(vectorDistance * 10000d) / 10000d;
 
-        return cos(rs);
+
+        return acos(rs)*180/3.141592654;
+       // return acos(rs);
     }
 
-    unsigned int getNorm() {
+    double getNorm() {
         if(norm != 0)
             return norm;
 
@@ -89,13 +82,14 @@ public:
 
     void printHistogram() {
         for(auto & current : pixelHash)
-            std::cout << "Red: " << current.first->getRed() << " Green: " << current.first->getGreen() << " Blue: "<< current.first->getBlue() << std::endl;
+            std::cout << "Red: " << (int)current.first.getRed() << " Green: " << (int)current.first.getGreen() << " Blue: "<< (int)current.first.getBlue() << "\tColor: " << (int)current.first.getColor() << "\t" << "times: " << current.second<<std::endl;
     }
 
 private:
     void calculateNorm() {
         for(auto & current : pixelHash)
             norm += current.second * current.second;
+        norm = sqrt(norm);
     }
 
 };

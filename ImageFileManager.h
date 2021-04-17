@@ -7,8 +7,8 @@
 
 #include "Image.h"
 
-#define RESIZE_WIDTH 400
-#define RESIZE_HEIGHT 225
+#define RESIZE_WIDTH 640
+#define RESIZE_HEIGHT 360
 
 #define SQUARES_WIDTH 40
 #define SQUARES_HEIGHT 45
@@ -20,7 +20,6 @@ static int squares = 0;
 class ImageFileManager {
 
 public:
-
 
     static void loadHistogram(Histogram &pHistogram, cv::Mat &pImageMatrix, const int &pXSquare,const int &pYSquare) {
 
@@ -62,7 +61,6 @@ public:
                 loadHistogram(currentImage->histogram, resizedImage, xSquare, ySquare);
                 currentImage++;
             }
-
 
         return image;
     }

@@ -74,7 +74,7 @@ public:
     bool operator() (const Pixel* pPixel) const {
         return color == pPixel->color;
     }
-
+    
 };
 
 

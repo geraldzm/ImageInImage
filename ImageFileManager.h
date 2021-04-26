@@ -3,34 +3,68 @@
 
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
+#include <opencv2/opencv.hpp>
 
 #include "Image.h"
+
+#define RESIZE_WIDTH 640
+#define RESIZE_HEIGHT 360
+
+#define SQUARES_WIDTH 40
+#define SQUARES_HEIGHT 45
+
+#define AMOUNT_SQUARES (RESIZE_HEIGHT/SQUARES_HEIGHT) * (RESIZE_WIDTH/SQUARES_WIDTH)
+
+static int squares = 0;
 
 class ImageFileManager {
 
 public:
+
+    static void loadHistogram(Histogram &pHistogram, cv::Mat &pImageMatrix, const int &pXSquare,const int &pYSquare) {
+
+        cv::Mat square = cv::Mat::zeros(SQUARES_WIDTH, SQUARES_HEIGHT, cv::IMREAD_COLOR);
+
+        square = pImageMatrix(cv::Rect(pXSquare, pYSquare, SQUARES_WIDTH, SQUARES_HEIGHT)).clone();
+
+
+        for(int row = pYSquare, yMax = SQUARES_HEIGHT + pYSquare; row < yMax; row++)
+            for (int column = pXSquare, xMax = SQUARES_WIDTH + pXSquare; column < xMax; column++) {
+
+                uint8_t *blue = pImageMatrix.ptr(row, column);
+                pHistogram.addPixel(*(blue + 2), *(blue + 1), *blue);
+
+            }
+
+        std::string name = "./images/" + std::to_string(squares++) + ".jpg";
+        cv::imwrite(name, square);
+
+    }
+
     static Image* getImage(std::string pPath) {
 
-        cv::Mat m = cv::imread(pPath, cv::IMREAD_COLOR);
+        cv::Mat fullSizeImage = cv::imread(pPath, cv::IMREAD_COLOR);
+        cv::Mat resizedImage = cv::Mat::zeros(RESIZE_WIDTH, RESIZE_HEIGHT, cv::IMREAD_COLOR);
 
-        auto *pixels = new Pixel[m.rows * m.cols];
-        Pixel *currentPixel = pixels;
+        cv::resize(fullSizeImage, resizedImage, cv::Size(RESIZE_WIDTH, RESIZE_HEIGHT), 0, 0);
 
-        for(int row = 0; row < m.rows; row++) {
-            for (int column = 0; column < m.cols; column++) {
+        cv::imwrite("./images/fullImage.jpg", resizedImage);
 
-                uint8_t *blue = m.ptr(row, column);
-               // uint8_t *green = blue + 1;
-                //uint8_t *red = blue + 2;
+        Image* image = new Image[AMOUNT_SQUARES];
+        image->length = AMOUNT_SQUARES;
+        Image *currentImage = image;
 
-                *currentPixel = Pixel(*(blue + 2), *(blue + 1), *blue);
+        for( int ySquare = 0; ySquare < RESIZE_HEIGHT; ySquare += SQUARES_HEIGHT)
 
-                currentPixel++;
+            for (int xSquare = 0; xSquare < RESIZE_WIDTH; xSquare += SQUARES_WIDTH) {
+
+                loadHistogram(currentImage->histogram, resizedImage, xSquare, ySquare);
+                currentImage++;
             }
-        }
 
-        return new Image(pixels, m.rows, m.cols);
+        return image;
     }
+
 };
 
 #endif //IMAGEINIMAGE_IMAGEFILEMANAGER_H

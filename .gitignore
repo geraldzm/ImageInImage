@@ -2,6 +2,7 @@
 .idea/
 CMakeLists.txt
 cmake-build-debug/
+images/
 
 Makefile
 
@@ -38,5 +39,15 @@ Makefile
 *.out
 *.app
 
-# libs
-/opencv-master/
+# Xcode
+*.entitlements
+.DS_Store
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.xcuserstate
+project.xcworkspace/
+xcuserdata/
+
+

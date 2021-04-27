@@ -15,9 +15,10 @@ struct Pair {
 };
 
 class listPairs {
-    vector <Pair> list;
+
     
 public:
+    vector <Pair> list;
     
     void addPair(Histogram* pHisto1, Histogram* pHisto2){
         if(abs(int(pHisto1->pixelHash.size() - pHisto2->pixelHash.size())) <= 300)

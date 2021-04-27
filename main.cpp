@@ -1,6 +1,7 @@
 #include <unordered_set>
 #include "ImageFileManager.h"
 #include "ListOfPairs.h"
+#include "DivideAndConquer.h"
 //#include "Histogram.h"
 
 
@@ -19,7 +20,10 @@ int main() {
 
     lista.printPairs();
     
+    DivideAndConquer searcher = DivideAndConquer();
+    int res = searcher.search(lista);
     
+    cout << "Result: " << res << endl;
     
     delete[] diego;
     delete[] tuanis;

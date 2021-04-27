@@ -33,7 +33,6 @@ public:
 
     }
 
-
     double calculateCosineSimilarity(Histogram &histogram) {
 
         // (A*B) / (||A|| * ||B||)

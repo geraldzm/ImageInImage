@@ -7,11 +7,11 @@
 
 #include "Image.h"
 
-#define RESIZE_WIDTH 640
-#define RESIZE_HEIGHT 360
+#define RESIZE_WIDTH 3840 // 640
+#define RESIZE_HEIGHT 2160 //360
 
-#define SQUARES_WIDTH 40
-#define SQUARES_HEIGHT 45
+#define SQUARES_WIDTH 160
+#define SQUARES_HEIGHT 90
 
 #define AMOUNT_SQUARES (RESIZE_HEIGHT/SQUARES_HEIGHT) * (RESIZE_WIDTH/SQUARES_WIDTH)
 
@@ -21,7 +21,7 @@ class ImageFileManager {
 
 public:
 
-    static void loadHistogram(Histogram &pHistogram, cv::Mat &pImageMatrix, const int &pXSquare,const int &pYSquare) {
+    static void loadHistogram(Histogram &pHistogram, cv::Mat &pImageMatrix, const int &pXSquare,const int &pYSquare, std::string imageName) {
 
         cv::Mat square = cv::Mat::zeros(SQUARES_WIDTH, SQUARES_HEIGHT, cv::IMREAD_COLOR);
 
@@ -36,19 +36,19 @@ public:
 
             }
 
-        std::string name = "./images/" + std::to_string(squares++) + ".jpg";
+        std::string name = "./images/" + imageName + std::to_string(squares++) + ".jpg";
         cv::imwrite(name, square);
 
     }
 
-    static Image* getImage(std::string pPath) {
+    static Image* getImage(std::string pPath, std::string imageName) {
 
         cv::Mat fullSizeImage = cv::imread(pPath, cv::IMREAD_COLOR);
-        cv::Mat resizedImage = cv::Mat::zeros(RESIZE_WIDTH, RESIZE_HEIGHT, cv::IMREAD_COLOR);
+       // cv::Mat resizedImage = cv::Mat::zeros(RESIZE_WIDTH, RESIZE_HEIGHT, cv::IMREAD_COLOR);
 
-        cv::resize(fullSizeImage, resizedImage, cv::Size(RESIZE_WIDTH, RESIZE_HEIGHT), 0, 0);
+       // cv::resize(fullSizeImage, resizedImage, cv::Size(RESIZE_WIDTH, RESIZE_HEIGHT), 0, 0);
 
-        cv::imwrite("./images/fullImage.jpg", resizedImage);
+        //cv::imwrite("./images/fullImage.jpg", resizedImage);
 
         Image* image = new Image[AMOUNT_SQUARES];
         image->length = AMOUNT_SQUARES;
@@ -58,7 +58,7 @@ public:
 
             for (int xSquare = 0; xSquare < RESIZE_WIDTH; xSquare += SQUARES_WIDTH) {
 
-                loadHistogram(currentImage->histogram, resizedImage, xSquare, ySquare);
+                loadHistogram(currentImage->histogram, fullSizeImage, xSquare, ySquare, imageName);
                 currentImage++;
             }
 

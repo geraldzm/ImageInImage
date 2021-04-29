@@ -1,10 +1,15 @@
 #ifndef ListOfPairs_h
 #define ListOfPairs_h
+
 #include <cmath>
-#include <cstdlib>
+#include <iostream>
+#include "vector"
+#include "Histogram.h"
+
 using namespace std;
 
 struct Pair {
+
     Histogram* histogram1;
     Histogram* histogram2;
     int difference;
@@ -14,20 +19,20 @@ struct Pair {
         histogram2 = pHisto2;
         difference = pDif;
     }
+
 };
 
-class listPairs {
-
+class ListPairs {
     
 public:
     vector <Pair> list;
     
-    void addPair(Histogram* pHisto1, Histogram* pHisto2){
+    void addPair(Histogram* pHisto1, Histogram* pHisto2) {
         if(abs(int(pHisto1->pixelHash.size() - pHisto2->pixelHash.size())) <= 300)
             list.push_back(Pair(pHisto1,pHisto2,abs(int(pHisto1->pixelHash.size() - pHisto2->pixelHash.size()))));
     }
     
-    void printPairs(){
+   void printPairs(){
         for(auto & current : list){
             cout << "Value 1: " << current.histogram1->pixelHash.size() << "\tValue 2: " << current.histogram2->pixelHash.size() << endl;
         }

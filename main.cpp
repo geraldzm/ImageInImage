@@ -2,31 +2,27 @@
 #include "ImageFileManager.h"
 #include "ListOfPairs.h"
 #include "DivideAndConquer.h"
-//#include "Histogram.h"
-
 
 using namespace std;
 
 int main() {
 
-    Image* diego = ImageFileManager::getImage("/Users/danielbejarano/Desktop/diegoEditado.jpg", "diego-");
-    Image* tuanis = ImageFileManager::getImage("/Users/danielbejarano/Desktop/tuanis.jpg", "tuanis-");
+    ListOfImages* space = ImageFileManager::getImage("/home/geraldzm/Pictures/space.jpg","space-");
+    ListOfImages* mountain = ImageFileManager::getImage("/home/geraldzm/Pictures/montana.jpg", "montana-");
 
-    listPairs lista;
+    ListPairs list;
 
-    for(int i = 0; i < diego->length; i++)
-        for(int j = 0; j < tuanis->length; j++)
-            lista.addPair(&(diego+i)->histogram, &(tuanis+j)->histogram);
-
-    lista.printPairs();
+    for(int i = 0; i < space->length; i++)
+        for(int j = 0; j < mountain->length; j++)
+            list.addPair( (space->image+i), (mountain->image+j));
     
     DivideAndConquer searcher = DivideAndConquer();
-    int res = searcher.search(lista);
+    int res = searcher.search(list);
     
     cout << "Result: " << res << endl;
     
-    delete[] diego;
-    delete[] tuanis;
+    delete[] space;
+    delete[] mountain;
 
     return 0;
 }

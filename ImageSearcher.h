@@ -1,12 +1,12 @@
 #ifndef ImageSearcher_h
 #define ImageSearcher_h
 
+#include "ListOfPairs.h"
 
 class ImageSearcher {
-    
-    
+
 public:
-    virtual int search(listPairs pList) = 0;
+    virtual int search(ListPairs pList) = 0;
 };
 
 

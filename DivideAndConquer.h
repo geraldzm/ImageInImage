@@ -18,7 +18,7 @@ public:
         return divideAndConquer(begin, mid) + divideAndConquer(mid , end);
     }
     
-    int search(listPairs pList) override{
+    int search(ListPairs pList) override{
         return divideAndConquer(pList.list.begin(), pList.list.end());
     }
    

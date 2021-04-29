@@ -7,10 +7,12 @@ using namespace std;
 struct Pair {
     Histogram* histogram1;
     Histogram* histogram2;
+    int difference;
     
-    Pair(Histogram* pHisto1, Histogram* pHisto2){
+    Pair(Histogram* pHisto1, Histogram* pHisto2, double pDif){
         histogram1 = pHisto1;
         histogram2 = pHisto2;
+        difference = pDif;
     }
 };
 
@@ -22,7 +24,7 @@ public:
     
     void addPair(Histogram* pHisto1, Histogram* pHisto2){
         if(abs(int(pHisto1->pixelHash.size() - pHisto2->pixelHash.size())) <= 300)
-            list.push_back(Pair(pHisto1,pHisto2));
+            list.push_back(Pair(pHisto1,pHisto2,abs(int(pHisto1->pixelHash.size() - pHisto2->pixelHash.size()))));
     }
     
     void printPairs(){

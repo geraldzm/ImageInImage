@@ -19,17 +19,21 @@ struct Pair {
         histogram2 = pHisto2;
         difference = pDif;
     }
-
+    
 };
 
 class ListPairs {
     
 public:
     vector <Pair> list;
+    int pivote;
     
-    void addPair(Histogram* pHisto1, Histogram* pHisto2) {
-        if(abs(int(pHisto1->pixelHash.size() - pHisto2->pixelHash.size())) <= 300)
-            list.push_back(Pair(pHisto1,pHisto2,abs(int(pHisto1->pixelHash.size() - pHisto2->pixelHash.size()))));
+    void addPair(Histogram* pHisto1, Histogram* pHisto2, int &pivote) {
+        
+        int difference = abs(int(pHisto1->pixelHash.size() - pHisto2->pixelHash.size()));
+        
+        if(difference <= (pivote))
+            list.push_back(Pair(pHisto1,pHisto2, difference));
     }
     
    void printPairs(){
@@ -38,6 +42,7 @@ public:
         }
         cout << "AMOUNT OF PAIRS: " << list.size() << endl;
     }
+    
 };
 
 

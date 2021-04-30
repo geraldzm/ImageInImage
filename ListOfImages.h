@@ -8,6 +8,10 @@ struct ListOfImages {
     Histogram* image;
     int length;
     unsigned long sumOfColors;
+    
+    ~ListOfImages(){
+        delete[] image;
+    }
 
 };
 

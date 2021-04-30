@@ -19,6 +19,7 @@ class Histogram {
 public:
     std::unordered_map<Pixel, int> pixelHash;
     double norm;
+    int numberImage;
 
 public:
 
@@ -26,6 +27,7 @@ public:
         pixelHash = {};
     }
 
+    
     void addPixel(uint8_t red, uint8_t green, uint8_t blue) {
 
         Pixel pixel(red, green, blue);
@@ -36,7 +38,6 @@ public:
     double calculateCosineSimilarity(Histogram &histogram) {
 
         // (A*B) / (||A|| * ||B||)
-
         unsigned int quotient = 0;
         int appearances;
         int equal = 0;
@@ -51,23 +52,8 @@ public:
         }
 
         double rs = quotient / ((double) (getNorm() * histogram.getNorm()));
-/*
-        std::cout << "Equals: " << equal << std::endl;
-        std::cout << "quotient: " << quotient << std::endl;
-        std::cout << "Size Hash 1: " << pixelHash.size() << std::endl;
-        std::cout << "Size Hash 2: " << histogram.pixelHash.size() << std::endl;
-
-        std::cout << "Norm Hash 1: " << getNorm() << std::endl;
-        std::cout << "Norm Hash 2: " << histogram.getNorm() << std::endl;
-
-        std::cout << "rs: " << rs << std::endl;
-*/
-        // round 4 digits precision to avoid decimal trash i.e 1.0000000000000002
-      //  vectorDistance = (double)Math.round(vectorDistance * 10000d) / 10000d;
-
 
         return acos(rs)*180/3.141592654;
-       // return acos(rs);
     }
 
     double getNorm() {

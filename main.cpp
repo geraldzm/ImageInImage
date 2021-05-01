@@ -8,20 +8,22 @@ using namespace std;
 
 int main() {
     
-    ListOfImages* image0 = ImageFileManager::getImage("/home/geraldzm/Pictures/b0.jpg", "cero-");
-    ListOfImages* image1 = ImageFileManager::getImage("/home/geraldzm/Pictures/b1.jpg","uno-");
+    ListOfImages* image0 = ImageFileManager::getImage("./pru/d0.jpg", "cero-");
+    ListOfImages* image1 = ImageFileManager::getImage("./pru/d1.jpg","uno-");
 
     ListPairs list(image0, image1);
 
+    DivideAndConquer searcher = DivideAndConquer();
+    int res = searcher.search(list);
 
- //   DivideAndConquer searcher = DivideAndConquer();
-   // int res = searcher.search(list);
+    cout << "Result divide: " << res << endl<< endl<< endl;
 
     BackTracking backTracking = BackTracking();
-    int res = backTracking.search(list);
+    res = backTracking.search(list);
     
-    cout << "Result: " << res << endl;
-    
+    cout << "Result backtracking: " << res << endl;
+
+
     delete image1;
     delete image0;
 

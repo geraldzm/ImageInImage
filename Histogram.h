@@ -20,15 +20,22 @@ public:
     std::unordered_map<Pixel, int> pixelHash;
     double norm;
     int numberImage;
+    unsigned long colorR;
+    unsigned long colorG;
+    unsigned long colorB;
 
 public:
 
-    Histogram():norm(0), numberImage(0){
+    Histogram():norm(0), numberImage(0), colorR(0), colorG(0), colorB(0){
         pixelHash = {};
     }
 
     
     void addPixel(uint8_t red, uint8_t green, uint8_t blue) {
+
+        colorR = red;
+        colorG = green;
+        colorB = blue;
 
         Pixel pixel(red, green, blue);
         pixelHash[pixel]++;
@@ -39,14 +46,14 @@ public:
 
         // (A*B) / (||A|| * ||B||)
         unsigned int quotient = 0;
-        int appearances;
         int equal = 0;
 
         for(auto & current : pixelHash) {
-            appearances = histogram.pixelHash[current.first];
 
-            if(appearances != 0) {
-                quotient += appearances * current.second;
+            auto ptr = histogram.pixelHash.find(current.first);
+
+            if(ptr != histogram.pixelHash.end()) {
+                quotient += ptr->second * current.second;
                 equal ++;
             }
         }

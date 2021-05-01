@@ -3,6 +3,7 @@
 CMakeLists.txt
 cmake-build-debug/
 images/
+pru/
 
 Makefile
 

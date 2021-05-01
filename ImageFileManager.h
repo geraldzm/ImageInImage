@@ -75,7 +75,9 @@ public:
         auto *list = new ListOfImages;
         list->image = new Histogram[AMOUNT_SQUARES];
         list->length = AMOUNT_SQUARES;
-        list->sumOfColors = 0;
+        list->sumOfColorR = 0;
+        list->sumOfColorG = 0;
+        list->sumOfColorB = 0;
 
         Histogram *currentHistogram = list->image;
 
@@ -84,7 +86,11 @@ public:
             for (int xSquare = 0; xSquare < RESIZE_WIDTH; xSquare += SQUARES_WIDTH) {
 
                 loadHistogram(*currentHistogram, fullSizeImage, xSquare, ySquare, imageName);
-                list->sumOfColors += currentHistogram->pixelHash.size();
+
+                list->sumOfColorR += currentHistogram->colorR;
+                list->sumOfColorG += currentHistogram->colorG;
+                list->sumOfColorB += currentHistogram->colorB;
+
                 currentHistogram++;
 
             }

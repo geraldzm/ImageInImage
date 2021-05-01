@@ -23,7 +23,7 @@ public:
 
 public:
 
-    Histogram():norm(0){
+    Histogram():norm(0), numberImage(0){
         pixelHash = {};
     }
 

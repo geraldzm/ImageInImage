@@ -8,9 +8,9 @@ class DivideAndConquer : ImageSearcher {
 public:
     
     int divideAndConquer(vector<Pair>::iterator begin, vector<Pair>::iterator end){
-        if(begin + 1 == end){
-            if(begin->histogram1->calculateCosineSimilarity(*(begin->histogram2)) < 50){
-                std::cout << "Image0: " << begin->histogram1->numberImage << "  Image1: " << begin->histogram2->numberImage << " Value: " <<  begin->histogram1->calculateCosineSimilarity(*(begin->histogram2)) << std::endl;
+        if(begin + 1 == end){ // NOTA: Ver esta picha
+            if(begin->cosineSimilarity < 50){
+                std::cout << "Image0: " << begin->histogram0->numberImage << "  Image1: " << begin->histogram1->numberImage << " Value: " << begin->histogram0->calculateCosineSimilarity(*(begin->histogram1)) << std::endl;
                 return 1;
             }
             return 0;

@@ -4,6 +4,7 @@
 #include "DivideAndConquer.h"
 #include "BackTracking.h"
 
+#include <queue>
 
 using namespace std;
 

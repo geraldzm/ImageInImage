@@ -27,11 +27,9 @@ struct Pair {
 };
 
 struct ComparePairs {
-
-    bool operator()(Pair const& p1, Pair const& p2) {
-        return p1.getPriority() < p2.getPriority();
+    bool operator()(Pair const* p1, Pair const* p2) {
+        return p1->getPriority() < p2->getPriority();
     }
-
 };
 
 class ListPairs {

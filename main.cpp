@@ -8,8 +8,9 @@ using namespace std;
 
 int main() {
     
-    ListOfImages* image0 = ImageFileManager::getImage("./pru/d0.jpg", "cero-");
-    ListOfImages* image1 = ImageFileManager::getImage("./pru/d1.jpg","uno-");
+    
+    ListOfImages* image0 = ImageFileManager::getImage("/Users/danielbejarano/Desktop/Análisis de Algoritmos/Projects/Proyecto1/ImageProject1/pru/c0.jpg", "cero-");
+    ListOfImages* image1 = ImageFileManager::getImage("/Users/danielbejarano/Desktop/Análisis de Algoritmos/Projects/Proyecto1/ImageProject1/pru/c1.jpg","uno-");
 
     ListPairs list(image0, image1);
 

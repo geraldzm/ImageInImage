@@ -19,6 +19,7 @@ class Histogram {
 public:
     std::unordered_map<Pixel, int> pixelHash;
     double norm;
+    double weight;
     int numberImage;
     unsigned long colorR;
     unsigned long colorG;
@@ -26,16 +27,16 @@ public:
 
 public:
 
-    Histogram():norm(0), numberImage(0), colorR(0), colorG(0), colorB(0){
+    Histogram():norm(0), numberImage(0), colorR(0), colorG(0), colorB(0), weight(1){
         pixelHash = {};
     }
 
     
     void addPixel(uint8_t red, uint8_t green, uint8_t blue) {
 
-        colorR = red;
-        colorG = green;
-        colorB = blue;
+        colorR += red;
+        colorG += green;
+        colorB += blue;
 
         Pixel pixel(red, green, blue);
         pixelHash[pixel]++;
@@ -47,15 +48,24 @@ public:
         // (A*B) / (||A|| * ||B||)
         unsigned int quotient = 0;
         int equal = 0;
+        int appearances;
 
         for(auto & current : pixelHash) {
 
-            auto ptr = histogram.pixelHash.find(current.first);
-
+           // auto ptr = histogram.pixelHash.find(current.first);
+            
+            if(histogram.pixelHash.find(current.first) == histogram.pixelHash.end())
+                continue;
+            
+            appearances = histogram.pixelHash[current.first];
+            quotient += appearances * current.second;
+            equal++;
+            /*
             if(ptr != histogram.pixelHash.end()) {
                 quotient += ptr->second * current.second;
                 equal ++;
             }
+             */
         }
 
         double rs = quotient / ((double) (getNorm() * histogram.getNorm()));

@@ -62,7 +62,7 @@ public:
             }
 
         pHistogram.numberImage = squares;
-        std::string name = "./images/" + imageName + std::to_string(squares++) + ".jpg";
+        std::string name = "/Users/danielbejarano/Desktop/Análisis de Algoritmos/Projects/Proyecto1/ImageProject1/images/" + imageName + std::to_string(squares++) + ".jpg";
         cv::imwrite(name, square);
 
     }
@@ -75,9 +75,7 @@ public:
         auto *list = new ListOfImages;
         list->image = new Histogram[AMOUNT_SQUARES];
         list->length = AMOUNT_SQUARES;
-        list->sumOfColorR = 0;
-        list->sumOfColorG = 0;
-        list->sumOfColorB = 0;
+        list->sumOfUniqueColors = 0;
 
         Histogram *currentHistogram = list->image;
 
@@ -87,10 +85,7 @@ public:
 
                 loadHistogram(*currentHistogram, fullSizeImage, xSquare, ySquare, imageName);
 
-                list->sumOfColorR += currentHistogram->colorR;
-                list->sumOfColorG += currentHistogram->colorG;
-                list->sumOfColorB += currentHistogram->colorB;
-
+                list->sumOfUniqueColors += currentHistogram->pixelHash.size();
                 currentHistogram++;
 
             }

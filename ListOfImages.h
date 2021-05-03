@@ -8,10 +8,7 @@ struct ListOfImages {
 
     Histogram* image;
     int length;
-
-    unsigned long sumOfColorR;
-    unsigned long sumOfColorG;
-    unsigned long sumOfColorB;
+    unsigned long sumOfUniqueColors;
 
 
     ~ListOfImages(){
@@ -22,9 +19,7 @@ struct ListOfImages {
 public:
     void printColors() {
 
-        std::cout << "R:\t" << sumOfColorR << std::endl;
-        std::cout << "G:\t" << sumOfColorG << std::endl;
-        std::cout << "B:\t" << sumOfColorB << std::endl;
+        std::cout << "ALL:\t" << sumOfUniqueColors << std::endl;
 
     }
 

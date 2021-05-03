@@ -55,7 +55,7 @@ public:
     }
 
     bool isMatch(Pair &current) const {
-        return current.cosineSimilarity < 50;
+        return current.cosineSimilarity < 60;
     }
 
 };

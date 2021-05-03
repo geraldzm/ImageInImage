@@ -18,8 +18,7 @@ class Histogram {
 
 public:
     std::unordered_map<Pixel, int> pixelHash;
-    double norm;
-    double weight;
+    double norm, priority;
     int numberImage;
     unsigned long colorR;
     unsigned long colorG;
@@ -27,7 +26,7 @@ public:
 
 public:
 
-    Histogram():norm(0), numberImage(0), colorR(0), colorG(0), colorB(0), weight(1){
+    Histogram():norm(0), numberImage(0), colorR(0), colorG(0), colorB(0), priority(0.5){
         pixelHash = {};
     }
 

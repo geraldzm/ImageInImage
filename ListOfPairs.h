@@ -19,11 +19,19 @@ struct Pair {
         histogram1 = pHisto1;
         cosineSimilarity = pHisto0->calculateCosineSimilarity(*pHisto1);
     }
-    
-    double getWeight(){
-        return histogram0->weight + histogram1->weight;
+
+    double getPriority() const{
+        return histogram0->priority + histogram1->priority;
     }
-    
+
+};
+
+struct ComparePairs {
+
+    bool operator()(Pair const& p1, Pair const& p2) {
+        return p1.getPriority() < p2.getPriority();
+    }
+
 };
 
 class ListPairs {

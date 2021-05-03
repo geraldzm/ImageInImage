@@ -62,7 +62,7 @@ public:
             }
 
         pHistogram.numberImage = squares;
-        std::string name = "/Users/danielbejarano/Desktop/Análisis de Algoritmos/Projects/Proyecto1/ImageProject1/images/" + imageName + std::to_string(squares++) + ".jpg";
+        std::string name = "./images/" + imageName + std::to_string(squares++) + ".jpg";
         cv::imwrite(name, square);
 
     }

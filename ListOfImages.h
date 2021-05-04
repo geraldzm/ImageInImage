@@ -4,23 +4,30 @@
 #include "Histogram.h"
 #include "iostream"
 
+using namespace std;
+
 struct ListOfImages {
 
-    Histogram* image;
+    vector<Histogram*> images;
+
     int length;
     unsigned long sumOfUniqueColors;
 
-
     ~ListOfImages(){
-        delete[] image;
+        for (auto ptr : images)
+            delete ptr;
     }
 
-
 public:
-    void printColors() {
 
+    explicit ListOfImages(int length){
+        this->length = length;
+        this->sumOfUniqueColors = 0;
+        images = vector<Histogram*>(this->length);
+    }
+
+    void printColors() const {
         std::cout << "ALL:\t" << sumOfUniqueColors << std::endl;
-
     }
 
 

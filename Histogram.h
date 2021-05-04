@@ -20,22 +20,16 @@ public:
     std::unordered_map<Pixel, int> pixelHash;
     double norm, priority;
     int numberImage;
-    unsigned long colorR;
-    unsigned long colorG;
-    unsigned long colorB;
+    bool imageOwner; // false = image0, true = image1
 
 public:
 
-    Histogram():norm(0), numberImage(0), colorR(0), colorG(0), colorB(0), priority(0.5){
+    Histogram():norm(0), numberImage(0), priority(0.5), imageOwner(false){
         pixelHash = {};
     }
 
     
     void addPixel(uint8_t red, uint8_t green, uint8_t blue) {
-
-        colorR += red;
-        colorG += green;
-        colorB += blue;
 
         Pixel pixel(red, green, blue);
         pixelHash[pixel]++;
@@ -86,6 +80,10 @@ public:
             std::cout << "Red: " << (int)current.first.getRed() << " Green: " << (int)current.first.getGreen() << " Blue: "<< (int)current.first.getBlue() << "\tColor: " << (int)current.first.getColor() << "\t" << "times: " << current.second<<std::endl;
     }
 
+    bool operator()(Histogram const* h1, Histogram const* h2) {
+        return h1->pixelHash.size() < h2->pixelHash.size();
+    }
+
 private:
     void calculateNorm() {
         for(auto & current : pixelHash)
@@ -95,5 +93,11 @@ private:
 
 };
 
+struct CompareHistograms {
+    bool operator()(Histogram* h1, Histogram* h2) {
+        return h1->pixelHash.size() > h2->pixelHash.size();
+        //return h1->priority > h2->priority;
+    }
+};
 
 #endif //IMAGEINIMAGE_IMAGE_H

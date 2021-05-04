@@ -5,6 +5,7 @@
 #include <iostream>
 #include "vector"
 #include "ListOfImages.h"
+#include <algorithm>
 
 using namespace std;
 
@@ -48,23 +49,72 @@ public:
         
         pivote =  abs(int((pImage0->sumOfUniqueColors / pImage0->length) - (pImage1->sumOfUniqueColors / pImage1->length))) *0.22; //valor alambrado que se modifica
 
-        for(int i = 0; i < pImage0->length; i++)
-            for(int j = 0; j < pImage1->length; j++)
-                addPair((pImage0->image + i), (pImage1->image + j));
+        // 1. join vectors
+        vector<Histogram *> joined(pImage0->images);
+        joined.insert(joined.end(), pImage1->images.begin(), pImage1->images.end());
+
+        // 2. sort
+        sort(joined.begin(), joined.end(), CompareHistograms());
+
+        // 3. pairs
+        vector<Histogram*> priorityImage0;
+        vector<Histogram*> priorityImage1;
+
+        for(auto &current: joined) {
+
+            if(current->imageOwner){ // is from image 1
+                addPair(priorityImage1, priorityImage0, current);
+            } else { // is from image 0
+                addPair(priorityImage0, priorityImage1, current);
+            }
+
+        }
 
         cout << "PivoteUniqueColors: " << pivote << endl;
         cout << "size of list: " << list.size() << endl;
     }
 
+    Pair createPair(Histogram* &pHistogram0, Histogram* &pHistogram1) {
+
+        if(pHistogram0->imageOwner == pHistogram1->imageOwner)
+            cout << "Error creating pairs, pairs from the same image are being match: " << endl;
+
+        if(pHistogram0->imageOwner) // if this histogram is from image 1
+            return Pair(pHistogram1, pHistogram0);
+
+        return Pair(pHistogram0, pHistogram1);
+    }
+
+    void addPair(vector<Histogram*> &pSortedImages, vector<Histogram*> &pSortedImagesToMatch, Histogram* pCurrentHistogram) {
+
+        if(!pSortedImagesToMatch.empty()) {
+
+            int cutOff = 0;
+
+            for(auto & possibleMatch: pSortedImagesToMatch) {
+
+                if(abs(int(possibleMatch->pixelHash.size() - pCurrentHistogram->pixelHash.size())) <= pivote) {
+                    list.emplace_back(createPair(possibleMatch, pCurrentHistogram));
+                }else if(possibleMatch->pixelHash.size() < pCurrentHistogram->pixelHash.size()) {
+                    break;
+                }
+
+                cutOff++;
+            }
+
+            pSortedImagesToMatch.resize(cutOff);
+        }
+
+        insertSorted(pSortedImages, pCurrentHistogram);
+    }
+
+    void insertSorted(vector<Histogram*> &pHistograms, Histogram* pToInsert) {
+        auto it = upper_bound(pHistograms.cbegin(), pHistograms.cend(), pToInsert, CompareHistograms());
+        pHistograms.insert(it, pToInsert);
+    }
+
 private:
 
-    void addPair(Histogram* pHisto0, Histogram* pHisto1) {
-        
-        if(abs(int(pHisto0->pixelHash.size() - pHisto1->pixelHash.size())) <= pivote)
-            list.emplace_back(Pair(pHisto0, pHisto1));
-
-    }
-    
    void printPairs() {
         for(auto & current : list){
             cout << "Value 1: " << current.histogram0->pixelHash.size() << "\tValue 2: " << current.histogram1->pixelHash.size() << endl;

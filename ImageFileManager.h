@@ -67,27 +67,24 @@ public:
 
     }
 
-    static ListOfImages* getImage(std::string pPath, std::string imageName) {
-
+    static ListOfImages* getImage(std::string pPath, std::string pImageName, bool const& pImageOwner) {
 
         cv::Mat fullSizeImage = cv::imread(pPath, cv::IMREAD_COLOR);
 
-        auto *list = new ListOfImages;
-        list->image = new Histogram[AMOUNT_SQUARES];
-        list->length = AMOUNT_SQUARES;
-        list->sumOfUniqueColors = 0;
+        auto *list = new ListOfImages(AMOUNT_SQUARES);
 
-        Histogram *currentHistogram = list->image;
+        auto currentHistogram = list->images.begin();
 
         for( int ySquare = 0; ySquare < RESIZE_HEIGHT; ySquare += SQUARES_HEIGHT)
-
             for (int xSquare = 0; xSquare < RESIZE_WIDTH; xSquare += SQUARES_WIDTH) {
 
-                loadHistogram(*currentHistogram, fullSizeImage, xSquare, ySquare, imageName);
+                *currentHistogram = new Histogram;
 
-                list->sumOfUniqueColors += currentHistogram->pixelHash.size();
+                loadHistogram(**currentHistogram, fullSizeImage, xSquare, ySquare, pImageName);
+                list->sumOfUniqueColors += (*currentHistogram)->pixelHash.size();
+
+                (*currentHistogram)->imageOwner = pImageOwner;
                 currentHistogram++;
-
             }
 
         squares = 0;

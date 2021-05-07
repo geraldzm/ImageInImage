@@ -9,55 +9,29 @@ class BackTracking : ImageSearcher {
 public:
 
     int search(ListPairs pList) override {
-
-        priority_queue<Pair*,  vector<Pair*>, ComparePairs> priorityQueue0;
-        priority_queue<Pair*,  vector<Pair*>, ComparePairs> priorityQueue1;
-
-        auto *currentQueue = &priorityQueue0;
-        auto *auxQueue = currentQueue;
-        auto *nextQueue = &priorityQueue1;
-
-        int counter = 0, loopCount = 0;
-        double poda, prioritySum;
-
-        for(auto & current: pList.list) // n
-            priorityQueue0.push(&current);
-
-        Pair* current;
-        Pair* pairToMove;
-        while (!currentQueue->empty()) {
-            loopCount++;
-            current = currentQueue->top();
-            currentQueue->pop();
-
-            incrementIfMatch(&counter, *current);
-
-            poda = current->getPriority();
-            while (!currentQueue->empty()) {
-
-                pairToMove = currentQueue->top();
-                currentQueue->pop();
-
-                prioritySum = pairToMove->getPriority();
-
-                if(poda <= prioritySum * 2) {
-                    nextQueue->push(pairToMove);
-                    poda = prioritySum;
-                } else {
-                    *currentQueue = priority_queue<Pair*,  vector<Pair*>, ComparePairs>(); // clean
-                    cout << "Hi" << endl;
-                }
-
+        
+        Pair* listPairs = nullptr;
+        int counter = 0;
+        auto iteratorMax = pList.list.begin();
+        auto currentPair = pList.list.begin();
+        auto currentMaxPair = pList.list.begin();
+        
+        do{
+            listPairs = &(*(iteratorMax));
+            pList.list.erase(iteratorMax);
+            currentPair = pList.list.begin();
+            incrementIfMatch(&counter, *listPairs);
+            currentMaxPair = currentPair;
+            while(currentPair != pList.list.end()){
+                if(currentPair->getPriority() > currentMaxPair->getPriority())
+                    currentMaxPair = currentPair;
+                currentPair++;
             }
-
-            auxQueue = nextQueue;
-            nextQueue = currentQueue;
-            currentQueue = auxQueue;
-
-        }
-
-        cout << loopCount<< endl;
-
+            
+            iteratorMax = currentMaxPair;
+            
+        }while(currentMaxPair != pList.list.end() && (abs(int(listPairs->getPriority() - currentMaxPair->getPriority())) < 2)) ;
+        
         return counter;
     }
 
@@ -66,8 +40,8 @@ public:
         if(isMatch(toCompare)) {
             cout << "Image0: " << toCompare.histogram0->numberImage << "  Image1: " << toCompare.histogram1->numberImage << " Value: " << toCompare.cosineSimilarity << endl;
             (*counter)++;
-            toCompare.histogram1->priority *= 1.5;
-            toCompare.histogram0->priority *= 1.5;
+            toCompare.histogram1->priority *= 1.2;
+            toCompare.histogram0->priority *= 1.2;
         }else {
             toCompare.histogram1->priority *= 0.9;
             toCompare.histogram0->priority *= 0.9;

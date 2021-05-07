@@ -11,8 +11,8 @@ using namespace std;
 int main() {
 
     cout << "Loading images..." << endl;
-    ListOfImages* image0 = ImageFileManager::getImage("/Users/danielbejarano/Desktop/Análisis de Algoritmos/Projects/Proyecto1/ImageProject1/pru/c0.jpg", "cero-", false);
-    ListOfImages* image1 = ImageFileManager::getImage("/Users/danielbejarano/Desktop/Análisis de Algoritmos/Projects/Proyecto1/ImageProject1/pru/c1.jpg","uno-", true);
+    ListOfImages* image0 = ImageFileManager::getImage("./pru/c0.jpg", "cero-", false);
+    ListOfImages* image1 = ImageFileManager::getImage("./pru/c1.jpg","uno-", true);
     cout << "Images loaded" << endl;
     
     cout << "Creating pairs..." << endl;

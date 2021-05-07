@@ -40,13 +40,13 @@ public:
     int pivote;
 
     ListPairs(ListOfImages *pImage0, ListOfImages *pImage1) {
-
+/*
         cout << "Sum0: " << endl;
         pImage0->printColors();
 
         cout << "Sum1: " << endl;
         pImage1->printColors();
-        
+        */
         pivote =  abs(int((pImage0->sumOfUniqueColors / pImage0->length) - (pImage1->sumOfUniqueColors / pImage1->length))) *0.22; //valor alambrado que se modifica
 
         // 1. join vectors

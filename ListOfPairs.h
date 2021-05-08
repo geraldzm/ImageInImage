@@ -21,6 +21,11 @@ struct Pair {
         cosineSimilarity = pHisto0->calculateCosineSimilarity(*pHisto1);
     }
 
+    Pair(){
+        histogram0 = nullptr;
+        histogram1 = nullptr;
+        cosineSimilarity = 0;
+    }
     double getPriority() const{
         return histogram0->priority + histogram1->priority;
     }

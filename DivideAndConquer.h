@@ -9,7 +9,7 @@ public:
     
     int divideAndConquer(vector<Pair>::iterator begin, vector<Pair>::iterator end){
         if(begin + 1 == end) { // NOTA: Ver esta picha
-            if(begin->cosineSimilarity < 44) { //valor alambrado que se modifica
+            if(begin->cosineSimilarity < 25) { //valor alambrado que se modifica
                 std::cout << "Image0: " << begin->histogram0->numberImage << "  Image1: " << begin->histogram1->numberImage << " Value: " << begin->histogram0->calculateCosineSimilarity(*(begin->histogram1)) << std::endl;
                 return 1;
             }

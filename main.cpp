@@ -4,7 +4,9 @@
 #include "DivideAndConquer.h"
 #include "BackTracking.h"
 #include "Probabilistic.h"
+#include <chrono>
 
+using namespace std::chrono;
 using namespace std;
 
 int main() {
@@ -17,6 +19,9 @@ int main() {
     cout << "Creating pairs..." << endl;
     ListPairs list(image0, image1);
     cout << "Pairs created" << endl;
+
+
+
 /*
     cout << "searching with divide and conquer..." << endl;
     DivideAndConquer searcher = DivideAndConquer();
@@ -30,10 +35,18 @@ int main() {
     cout << "Result of backtracking: " << res << endl;
 */
 
+
     cout << "searching with probabilistic..." << endl;
     Probabilistic probabilistic = Probabilistic();
+
+    auto t0 = duration_cast <milliseconds> (system_clock::now().time_since_epoch());
     int  res = probabilistic.search(list);
+    auto t1 = duration_cast <milliseconds> (system_clock::now().time_since_epoch());
+
     cout << "Result of probabilistic: " << res << endl;
+
+    auto duration = t1 - t0;
+    cout << "\nTime:\t" << duration.count() << "\t\tmicroseconds" << endl;
 
     delete image1;
     delete image0;

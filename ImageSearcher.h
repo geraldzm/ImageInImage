@@ -7,6 +7,11 @@ class ImageSearcher {
 
 public:
     virtual int search(ListPairs pList) = 0;
+
+    bool isMatch(Pair &current) const {
+        return current.cosineSimilarity < 25;
+    }
+
 };
 
 

@@ -54,11 +54,6 @@ public:
             toCompare.histogram0->priority *= 0.99;
         }
     }
-
-    bool isMatch(Pair &current) const {
-        return current.cosineSimilarity < 25;
-    }
-    
     
 };
 

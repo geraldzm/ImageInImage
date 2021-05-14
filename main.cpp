@@ -3,8 +3,7 @@
 #include "ListOfPairs.h"
 #include "DivideAndConquer.h"
 #include "BackTracking.h"
-
-#include <queue>
+#include "Probabilistic.h"
 
 using namespace std;
 
@@ -24,10 +23,17 @@ int main() {
     int res = searcher.search(list);
     cout << "Result of divide and conquer: " << res << endl<< endl<< endl;
 */
+/*
     cout << "searching with backtracking..." << endl;
     BackTracking backTracking = BackTracking();
    int  res = backTracking.search(list);
     cout << "Result of backtracking: " << res << endl;
+*/
+
+    cout << "searching with probabilistic..." << endl;
+    Probabilistic probabilistic = Probabilistic();
+    int  res = probabilistic.search(list);
+    cout << "Result of probabilistic: " << res << endl;
 
     delete image1;
     delete image0;

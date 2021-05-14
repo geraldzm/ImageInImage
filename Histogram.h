@@ -16,6 +16,10 @@ namespace std {
 
 class Histogram {
 
+private:
+    int appearancesInPairs;
+    int appearancesInPairsBackUp;
+
 public:
     std::unordered_map<Pixel, int> pixelHash;
     double norm, priority;
@@ -24,10 +28,26 @@ public:
 
 public:
 
-    Histogram():norm(0), numberImage(0), priority(0.5), imageOwner(false){
+    Histogram(): norm(0), numberImage(0), priority(0.5), imageOwner(false), appearancesInPairs(0), appearancesInPairsBackUp(0){
         pixelHash = {};
     }
 
+    void incrementAppearances(){
+        appearancesInPairs++;
+        appearancesInPairsBackUp++;
+    }
+
+    void decrementAppearances() {
+        appearancesInPairs = std::max(0 , appearancesInPairs-1);
+    }
+
+    void resetAppearances() {
+        appearancesInPairs = appearancesInPairsBackUp;
+    }
+
+    int getAppearancesInPairs() {
+        return appearancesInPairs;
+    }
     
     void addPixel(uint8_t red, uint8_t green, uint8_t blue) {
 

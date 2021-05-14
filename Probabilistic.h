@@ -11,21 +11,22 @@ public:
 
         srand (time(NULL));
 
-        double percentageOfList = 0.3;
-        int times = 3;
+        double percentageOfList = 0.25;
+        int times = 5;
         int counterMax = 0;
 
         for(int i = 0; i < times; i++) {
 
             vector <Pair> listCopy;
 
-            for (int coping = 0; coping < pList.list.size(); coping ++) {
-                listCopy.push_back(pList.list[i]);
-                pList.list[i].histogram0->resetAppearances();
-                pList.list[i].histogram1->resetAppearances();
+            for (int copying = 0; copying < pList.list.size(); copying++) {
+                listCopy.push_back(pList.list[copying]);
+                listCopy[copying].histogram0->resetAppearances();
+                listCopy[copying].histogram1->resetAppearances();
 
-                pList.list[i].histogram0->priority = 0.5;
-                pList.list[i].histogram1->priority = 0.5;
+                listCopy[copying].histogram0->priority = 0.5;
+                listCopy[copying].histogram1->priority = 0.5;
+                
             } //n
 
             unsigned long  maxLoop = listCopy.size() * percentageOfList;
@@ -57,12 +58,11 @@ public:
                 sum -= pairSelected->getPriority();
                 pairSelected->histogram0->decrementAppearances();
                 pairSelected->histogram1->decrementAppearances();
-
                 listCopy.erase(pairSelected);
             }
 
             if(counter > counterMax) counterMax = counter;
-
+            listCopy.clear();
         }
 
         return counterMax;
@@ -87,10 +87,10 @@ public:
             cout << "Image0: " << h0->numberImage << "  Image1: " << h1->numberImage << " Value: " << toCompare.cosineSimilarity << " priority: " << toCompare.getPriority() << endl;
             (*counter)++;
 
-            updatePriority(h0, h1, sum, 1.3);
+            updatePriority(h0, h1, sum, PRIORITYINCREASE);
 
         } else {
-            updatePriority(h0, h1, sum, 0.9);
+            updatePriority(h0, h1, sum, PRIORITYDECREASE);
         }
         
     }

@@ -3,6 +3,8 @@
 #include "ImageSearcher.h"
 #include <queue>
 
+#define PODAMAX 0.3
+
 
 class BackTracking : ImageSearcher {
 
@@ -39,7 +41,7 @@ public:
     }
 
     bool isValidNextMax(const Pair *pLastMaxPair, const vector<Pair>::iterator &pCurrentMaxPair) const {
-        return pLastMaxPair->getPriority() - pCurrentMaxPair->getPriority() <= 0.3;
+        return pLastMaxPair->getPriority() - pCurrentMaxPair->getPriority() <= PODAMAX;
     }
 
     void incrementIfMatch(int *counter, Pair &toCompare) const {
@@ -47,11 +49,11 @@ public:
         if(isMatch(toCompare)) {
             cout << "Image0: " << toCompare.histogram0->numberImage << "  Image1: " << toCompare.histogram1->numberImage << " Value: " << toCompare.cosineSimilarity  << " priority: " << toCompare.getPriority() << endl;
             (*counter)++;
-            toCompare.histogram1->priority *= 1.3;
-            toCompare.histogram0->priority *= 1.3;
+            toCompare.histogram1->priority *= PRIORITYINCREASE;
+            toCompare.histogram0->priority *= PRIORITYINCREASE;
         } else {
-            toCompare.histogram1->priority *= 0.99;
-            toCompare.histogram0->priority *= 0.99;
+            toCompare.histogram1->priority *= PRIORITYDECREASE;
+            toCompare.histogram0->priority *= PRIORITYDECREASE;
         }
     }
     

@@ -21,32 +21,46 @@ int main() {
     cout << "Pairs created" << endl;
 
 
+    //----------------------------------------------------------------------------------------------------------------------
 
-/*
     cout << "searching with divide and conquer..." << endl;
     DivideAndConquer searcher = DivideAndConquer();
-    int res = searcher.search(list);
-    cout << "Result of divide and conquer: " << res << endl<< endl<< endl;
-*/
-/*
+    auto t0d = duration_cast <milliseconds> (system_clock::now().time_since_epoch());
+    int resd = searcher.search(list);
+    auto t1d = duration_cast <milliseconds> (system_clock::now().time_since_epoch());
+
+    cout << "Result of divide and conquer: " << resd << endl<< endl<< endl;
+
+    auto durationd = t1d - t0d;
+    cout << "\nTime probabilistic:\t" << durationd.count() << "\t\tmicroseconds" << endl;
+
+    //----------------------------------------------------------------------------------------------------------------------
+    /*
     cout << "searching with backtracking..." << endl;
     BackTracking backTracking = BackTracking();
-   int  res = backTracking.search(list);
-    cout << "Result of backtracking: " << res << endl;
+    auto t0b = duration_cast <milliseconds> (system_clock::now().time_since_epoch());
+    int  resb = backTracking.search(list);
+    auto t1b = duration_cast <milliseconds> (system_clock::now().time_since_epoch());
+
+    cout << "Result of backtracking: " << resb << endl;
+
+    auto durationb = t1b - t0b;
+    cout << "\nTime probabilistic:\t" << durationb.count() << "\t\tmicroseconds" << endl;
 */
-
-
+    //----------------------------------------------------------------------------------------------------------------------
+/*
     cout << "searching with probabilistic..." << endl;
     Probabilistic probabilistic = Probabilistic();
 
-    auto t0 = duration_cast <milliseconds> (system_clock::now().time_since_epoch());
-    int  res = probabilistic.search(list);
-    auto t1 = duration_cast <milliseconds> (system_clock::now().time_since_epoch());
+    auto t0p = duration_cast <milliseconds> (system_clock::now().time_since_epoch());
+    int  resp = probabilistic.search(list);
+    auto t1p = duration_cast <milliseconds> (system_clock::now().time_since_epoch());
 
-    cout << "Result of probabilistic: " << res << endl;
+    cout << "Result of probabilistic: " << resp << endl;
 
-    auto duration = t1 - t0;
-    cout << "\nTime:\t" << duration.count() << "\t\tmicroseconds" << endl;
+    auto durationp = t1p - t0p;
+    cout << "\nTime probabilistic:\t" << durationp.count() << "\t\tmicroseconds" << endl;
+*/
 
     delete image1;
     delete image0;
